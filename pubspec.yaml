@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.4
+  font_awesome_flutter: ^10.7.0
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
 
@@ -21,4 +22,6 @@ dev_dependencies:
   freezed: ^2.4.7
   json_serializable: ^6.7.1
 flutter:
+  assets:
+    - assets/
   uses-material-design: true
