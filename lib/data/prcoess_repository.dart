@@ -14,7 +14,11 @@ class ProcessRepository {
     try {
       final response = await _dio.get('/data');
       final List<dynamic> data = response.data['data'];
-      return data.map((json) => ProcessModel.fromJson(json)).toList();
+      final processes = data.map((json) => ProcessModel.fromJson(json)).toList();
+      processes.sort(
+        (a, b) => b.duration.compareTo(a.duration),
+      );
+      return processes;
     } on DioException catch (e) {
       showErrorSnackBar(e.toString());
     } catch (e) {

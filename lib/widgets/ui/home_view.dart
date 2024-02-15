@@ -106,13 +106,20 @@ class _HomeViewState extends State<HomeView> {
                                                             errorBuilder: (context, error, stackTrace) => buildDefaultAppIcon(),
                                                           )
                                                         : buildDefaultAppIcon(),
-                                                    title: Row(
+                                                    title: Flex(
+                                                      direction: Axis.horizontal,
                                                       children: [
                                                         if (index == 0) ...[
-                                                          const Icon(FontAwesomeIcons.crown,size: 16,),
+                                                          const Icon(
+                                                            FontAwesomeIcons.crown,
+                                                            size: 16,
+                                                          ),
                                                           const SizedBox(width: AppSizes.kGap),
                                                         ],
-                                                        Text(process.name),
+                                                        Flexible(
+                                                          fit: FlexFit.loose,
+                                                          child: Text(process.name, softWrap: false, overflow: TextOverflow.ellipsis),
+                                                        ),
                                                       ],
                                                     ),
                                                     trailing: Text(formatDuration(process.duration), style: Theme.of(context).textTheme.bodyMedium),

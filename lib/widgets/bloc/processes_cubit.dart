@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:echse_frontend/models/process_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,12 +25,25 @@ class ProcessesLoaded extends ProcessesState {
 class ProcessesCubit extends Cubit<ProcessesState> {
   ProcessesCubit(super.initialState);
 
+  Timer? _timer;
+
   Future<void> initialize() async {
     final processes = await state.repository.getProcesses();
-    processes.sort(
-      (a, b) => b.duration.compareTo(a.duration),
-    );
     emit(ProcessesLoaded(state.repository, processes: processes, isFetchingInBackground: false));
+    _startRefreshTimer();
+  }
+
+  @override
+  Future<void> close() {
+    _timer?.cancel();
+    return super.close();
+  }
+
+  void _startRefreshTimer() {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(minutes: 1), (_) {
+      refresh();
+    });
   }
 
   Future<void> refresh() async {
