@@ -1,5 +1,6 @@
 import 'package:echse_frontend/config/constants.dart';
 import 'package:echse_frontend/config/global_service.dart';
+import 'package:echse_frontend/utils/tools/duration_formatter.dart';
 import 'package:echse_frontend/widgets/bloc/processes_cubit.dart';
 import 'package:echse_frontend/widgets/bloc/repository_cubit.dart';
 import 'package:flutter/material.dart';
@@ -105,9 +106,16 @@ class _HomeViewState extends State<HomeView> {
                                                             errorBuilder: (context, error, stackTrace) => buildDefaultAppIcon(),
                                                           )
                                                         : buildDefaultAppIcon(),
-                                                    title: Text(process.name),
-                                                    trailing: Text('${process.duration} Minute${process.duration == 1 ? '' : 'n'}',
-                                                        style: Theme.of(context).textTheme.bodyMedium),
+                                                    title: Row(
+                                                      children: [
+                                                        if (index == 0) ...[
+                                                          const Icon(FontAwesomeIcons.crown,size: 16,),
+                                                          const SizedBox(width: AppSizes.kGap),
+                                                        ],
+                                                        Text(process.name),
+                                                      ],
+                                                    ),
+                                                    trailing: Text(formatDuration(process.duration), style: Theme.of(context).textTheme.bodyMedium),
                                                   ),
                                                   const SizedBox(
                                                     height: AppSizes.kBigGap,
